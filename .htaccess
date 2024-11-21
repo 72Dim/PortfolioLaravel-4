@@ -1,95 +1,10 @@
-# файл находится по адрессу:
-# D:\CopyFromDick_E_projects\projects\laravel-3-study.loc\.htaccess
-
 # https://httpd.apache.org
-# https://httpd.apache.org/docs/current/mod/directives.html#O
 
-            # Директивы
-    # данного файла относятся только к
-    # этой директории и ко всему, что в ней.
-
-# Установка default кодировки сервера
-# Windows-1251 -кирилическая utf-8 -юникод ....
 AddDefaultCharset utf-8
-# AddDefaultCharset Win-1251
 
-# Показывать список каталог(а-гов)
-# (+) разрешить, (-) запретить
- Options +Indexes
-# стилизация списка каталога
-# IndexOptions FancyIndexing
-# IndexOptions FancyIndexing ScanHTMLTitles
+Options +Indexes
+IndexOptions FancyIndexing ScanHTMLTitles
 
-# -------------- Для проекта на Laravel -----------------------------------------
-# Директива разрешает или запрещает во время
-# выполнения двигателя перенаправление.
-# RewriteEngine on
-
-# Условие переписать
-# RewriteCond %{REQUEST_FILENAME} !-d
-# RewriteCond %{REQUEST_FILENAME} !-f
-
-# Правило переписать
-# RewriteRule ^$ public/index.php [L]
-# RewriteRule ^((?!public/).*)$ public/$1 [L,NC]
-# RewriteRule ^(.*)/$ /$1 [L,R=301]
-# RewriteRule ^ index.php [L]
-# -------------------- end Laravel ------------------------------------------------
-
-# Перенаправление c использованием регулярного выражения
-# RedirectMatch 301 .+\.txt$ /example-app/resources/views/home.blade.php
-# RedirectMatch 301 .+\.txt$ /CheeseInMousetrap.png
-# RedirectMatch (.+\.txt)$ /index.php?file=$1
-# RedirectMatch .+?([^/]+\.(txt|png))$ /_index.php?file=$1
-# RedirectMatch .+?([^/]+\.(txt|png))$ /_index.php?file=$1
-# RedirectMatch .+?([^/]+\.(txt|png))$ /http://test.loc/example-app/resources/views/home.blade.php?file=$1
-
-
-# Открытие файлов без указания расширения
-# если есть файлы с одинаковыми именами но с разным расширением
-# это может привести к неожиданным результатам
-# (+) разрешить, (-) запретить
-# Options +MultiViews
-
-# Переопределение файла по умолчанию index.html на любой другой
-# DirectoryIndex index.php
-# DirectoryIndex CheeseInMousetrap.png
-
-# Скрытие абсолютно всех файлов
-# IndexIgnore *
-# Скрытие всех файлов, определённых и с конкретным расширением из списка
-# IndexIgnore *.txt *.rar *.zip CheeseInMousetrap.png
-
-# Приметивное перенаправление
-# используються только абсолютные адресса
-# происходит физическая перезапись адресса в адресной строке
-# возможные коды 301, 302, 303, 410.
-# Redirect /index.html /index.php
-# Redirect /index.html http://test.loc/index.php
-# Redirect /example-app/resources/views/home.blade.php /index.html
-# Redirect /index.html /example-app/resources/views/home.blade.php
-# Redirect 301 /index.html http://test.loc/example-app/resources/views/home.blade.php
-# Redirect /index.html https://www.php.net/manual/ru/langref.php
-#  Redirect http://laravel-4.loc http://laravel-4.loc/public/index.php
-# Redirect /vite.config.js /_index.php
-# Redirect /vite.config.js http://laravel-4.loc/public/index.php
-# Redirect /laravel-4.loc/index.html /laravel-4.loc/index.php
- Redirect /laravel-4.loc/index.html /laravel-4.loc/public/index.php
-
-# Перенаправление c использованием регулярного выражения
-# RedirectMatch 301 .+\.txt$ /example-app/resources/views/home.blade.php
-# RedirectMatch 301 .+\.txt$ /CheeseInMousetrap.png
-# RedirectMatch (.+\.txt)$ /index.php?file=$1
-# RedirectMatch .+?([^/]+\.(txt|png))$ /_index.php?file=$1
-# RedirectMatch .+?([^/]+\.(txt|png))$ /_index.php?file=$1
-# RedirectMatch .+?([^/]+\.(txt|png))$ /http://test.loc/example-app/resources/views/home.blade.php?file=$1
-
-
-# Чтение php кода в HTML и JS файлах
-# в файле .html - php читается, а в js файле не читается, а должен.
-# RemoveHandler .html .htm .js
-# AddType application/x-httpd-php .php .htm .js .html .phtml
-
-# Закрываем доступ к папке через браузер
-# файл .htaccess находится в example-app,
-# а дериктива Deny from all запрещает доступ к нему.
+    RewriteEngine on
+    RewriteCond %{REQUEST_URL} !^public
+    RewriteRule ^ public/index.php [END]
