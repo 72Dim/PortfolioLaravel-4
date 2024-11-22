@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Artisan;
 
 class RegisterController extends Controller
 {
@@ -21,14 +23,14 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+    use RegistersUsers;     // trait - use Illuminate\Foundation\Auth\RegistersUsers;
 
     /**
      * Where to redirect users after registration.
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = RouteServiceProvider::HOME;     // Путь по которому будет перенаправленн пользователь после успешного входа в систему
 
     /**
      * Create a new controller instance.
@@ -49,9 +51,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'name'  => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);
     }
 
@@ -64,9 +66,27 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
+            'name'  => $data['name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password'=> Hash::make($data['password']),
         ]);
     }
+
+    public function showRegistrationForm () {
+        // $exitCode = Artisan::call('db:seed'); //['name'=>'Brok']
+        return view('main')
+            ->with([
+                // 'validation' => true,
+                'validation'   => false,
+                'bodyClass'    => 'modal-open_register',    /* значение для класса тега <body>, указует на открытие модального окна */
+                'modalBackdrop'=> 'display: block',         /* значение для модального фона в теге <div class="modal-backdrop fade show" */
+                'modalDialog'  => 'register',               /* значение указует какое диалоговое окно открыть в модальном блоке */
+                'nameContent'  => 'register',
+                'toPage'    => 'On main',
+                'h1_title1' => "Данная работа, это тестовое задание (портфолио).",
+                'h1_title2' => "Для подражания был взят сайт Rozetka.",
+                'imgClassName' => 'img-laravel_book',
+            ]);
+    }
+
 }

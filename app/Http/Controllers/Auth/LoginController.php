@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -25,8 +26,8 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
-
+    protected $redirectTo = RouteServiceProvider::HOME;     // Путь по которому будет перенаправленн пользователь после успешного входа в систему
+    // HOME - Это константа в RouteServiceProvider.php
     /**
      * Create a new controller instance.
      *
@@ -34,7 +35,20 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
-        $this->middleware('auth')->only('logout');
+        $this->middleware('guest')->except('logout');   // кроме
+    }
+
+    public function showLoginForm () {   // Переопределяем представление Laravel с auth.login, по умолчанию, на своё view.main
+        return view('main')
+        ->with([
+            'bodyClass'    => 'modal-open_login',   /* значение для класса тега <body>, указует на открытие модального окна */
+            'modalBackdrop'=> 'display: block',     /* значение для модального фона в теге <div class="modal-backdrop fade show" */
+            'modalDialog'  => 'login',              /* значение указует какое диалоговое окно открыть в модальном блоке */
+            'nameContent'  => 'login',              /* значение показывает, какое наполнение у контента ''-содержимое по умолчанию */
+            'toPage'    => 'On main',
+            'h1_title1' => "Данная работа, это тестовое задание (портфолио).",
+            'h1_title2' => "Для подражания был взят сайт Rozetka.",
+            'imgClassName' => 'img-laravel_book',
+        ]);
     }
 }
