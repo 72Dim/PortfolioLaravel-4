@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL;
-
+use Illuminate\Support\Facades\Gate;
+use App\Models\User;
+use App\Models\Product;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,7 +24,8 @@ class AppServiceProvider extends ServiceProvider
         // 'laravelbook' => 'laravelbook.png',
         'laravelbook' => 'https://kupichitay.com.ua/wp-content/uploads/2020/03/u_files_store_3_2336915.jpg',
     ];
-    /**//* Зарегистрируйте любые услуги приложения.
+    /**
+     * Зарегистрируйте любые услуги приложения.
      * Register any application services.
      */
     public function register(): void
@@ -45,5 +48,10 @@ class AppServiceProvider extends ServiceProvider
             'penRegister' => $this->thumbnail['penRegister'],
             'laravelBook' => $this->thumbnail['laravelbook'],
         ]);
+
+        Gate::define('show_products', function ($user, $products) {
+            return ($user->name == 'Dany') ? true : false;
+        });
+
     }
 }
