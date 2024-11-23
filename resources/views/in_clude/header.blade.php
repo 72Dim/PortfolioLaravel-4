@@ -13,17 +13,33 @@
                             </svg>
                         </button>
                     </kd-mobile-user-menu>
-                    <a class="header__logo" href="/">
+                    <a href="/"
+                        class="header__logo"
+                        style="width: 260px">
                         @if ( 'categories' == $nameContent || 'products'   == $nameContent )
-                            <img src="{{ $brandImage ?? '' }}" alt="Name brand">
-                        @else                           
-                            <img src="{{ $nameBranch ?? '' }}" alt="Name git branch">
+                        <img
+                            width="40"
+                            height="40"
+                            src="{{ $brandImage ?? '' }}"
+                            alt="Name brand">
+                            <span style="margin-left: 6px; color:yellowgreen">
+                                Brand image
+                            </span>
+                        @else
+                        <img
+                            width="40"
+                            height="40"
+                            src="{{ $nameBranch ?? '' }}"
+                            alt="Name git branch">
+                            <span style="margin-left: 10px; color:yellowgreen">
+                                jsAsOOP
+                            </span>
                         @endif
                     </a>
                     <button class="button button--medium button--with-icon menu__toggle"
                         id="fat-menu" aria-label="Каталог"
                         formaction="">
-                        Кнопка 
+                        Кнопка
                     </button>
                     <div class="header-search js-app-search-suggest">
                         <form class="search-form ng-pristine ng-valid ng-touched"
@@ -58,7 +74,7 @@
                             <button class="button button_color_green button_size_medium search-form__submit"
                                 type="submit"
                                 name="open_categorys">
-                                Найти 
+                                Найти
                             </button>
                         </form>
                     </div>
